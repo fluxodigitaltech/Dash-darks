@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Cores Principais - Dark Tech Theme */
+    --primary-black:    220 15% 8%;   /* #111318 - Deep Blue/Gray */
+    --secondary-black:  220 15% 12%;  /* #1A1C23 - Slightly Lighter */
+    --card-bg:          220 15% 10%;  /* #16181D - Between primary and secondary */
+    --border-color:     220 10% 25%;  /* #383A45 - Softer border */
+
+    /* Cores de Destaque */
+    --accent-silver:    210 10% 75%; /* #B8BCC2 - Cooler Silver */
+    --accent-turquoise: 186 100% 41.2%; /* #00bcd4 - Keep it vibrant */
+    --accent-white:     0 0% 100%; /* #ffffff */
+    --text-color:       210 20% 95%; /* #EDEFF2 - Off-white, easier on the eyes */
+
+    /* Cores de Status */
+    --success-color:    145 63% 42%; /* #28a745 -> Brighter Green */
+    --warning-color:    45 100% 51.4%; /* #ffc107 */
+    --danger-color:     0 84% 60%; /* #dc3545 -> Brighter Red */
+    --pending-color:    210 10% 45.7%; /* #6c757d */
+
+    /* Mapeamento para Shadcn/UI */
+    --background:       var(--primary-black);
+    --foreground:       var(--text-color);
+    --card:             var(--card-bg);
+    --card-foreground:  var(--text-color);
+    --popover:          var(--card-bg);
+    --popover-foreground: var(--text-color);
+    --primary:          var(--accent-turquoise);
+    --primary-foreground: var(--accent-white);
+    --secondary:        var(--secondary-black);
+    --secondary-foreground: var(--text-color);
+    --muted:            var(--secondary-black);
+    --muted-foreground: var(--accent-silver);
+    --accent:           var(--accent-turquoise);
+    --accent-foreground: var(--text-color);
+    --destructive:      var(--danger-color);
+    --destructive-foreground: var(--accent-white);
+    --border:           var(--border-color);
+    --input:            var(--secondary-black);
+    --ring:             var(--accent-turquoise);
+    --radius:           0.75rem;
+
+    /* Sidebar */
+    --sidebar-background: var(--secondary-black);
+    --sidebar-foreground: var(--text-color);
+    --sidebar-primary: var(--accent-turquoise);
+    --sidebar-primary-foreground: var(--accent-white);
+    --sidebar-accent: var(--secondary-black);
+    --sidebar-accent-foreground: var(--accent-silver);
+    --sidebar-border: var(--border-color);
+    --sidebar-ring: var(--accent-turquoise);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-[hsl(var(--border))];
+  }
+
+  body {
+    @apply bg-[hsl(var(--background))] text-[hsl(var(--foreground))] font-montserrat;
+    /* Add subtle background pattern */
+    background-image: radial-gradient(hsl(var(--border-color)) 0.5px, transparent 0.5px);
+    background-size: 15px 15px;
+  }
+}
+
+@layer components {
+  .glow-card {
+    @apply relative overflow-hidden bg-[hsl(var(--card-bg))] backdrop-blur-sm border border-[hsl(var(--border-color))] rounded-lg;
+    @apply shadow-lg transition-all duration-300;
+    /* Add a subtle inner shadow for depth */
+    box-shadow: inset 0 1px 1px hsla(0, 0%, 100%, 0.05), 0 4px 15px rgba(0,0,0,0.2);
+  }
+  
+  .glow-card:hover {
+    transform: translateY(-3px);
+    border-color: hsl(var(--accent-turquoise) / 0.5);
+    box-shadow: inset 0 1px 1px hsla(0, 0%, 100%, 0.05), 0 8px 25px rgba(0,0,0,0.3), 0 0 15px hsl(var(--accent-turquoise) / 0.2);
+  }
+
+  /* Efeito de borda lateral para MetricCard */
+  .metric-card-left-border::before {
+    content: '';
+    @apply absolute top-0 left-0 w-[4px] h-full rounded-l-lg;
+    background: linear-gradient(to bottom, hsl(var(--accent-turquoise)), hsl(var(--accent-turquoise) / 0.5));
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+  }
+  .metric-card-left-border:hover::before {
+    opacity: 1;
+  }
+  
+  /* Mobile optimizations */
+  .mobile-optimized {
+    @apply text-sm leading-tight;
+  }
+
+  .line-clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Classes de gradiente para botões */
+  .btn-gradient-default {
+    background: linear-gradient(135deg, hsl(var(--accent-silver)), #4a4a4a);
+    color: hsl(var(--text-color));
+  }
+  .btn-gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--accent-turquoise)), hsl(186 100% 30%));
+    color: hsl(var(--accent-white));
+  }
+  .btn-gradient-success {
+    background: linear-gradient(135deg, hsl(var(--success-color)), hsl(100 61.3% 25%));
+    color: hsl(var(--accent-white));
+  }
+  .btn-gradient-danger {
+    background: linear-gradient(135deg, hsl(var(--danger-color)), hsl(354 70% 35%));
+    color: hsl(var(--accent-white));
+  }
+  .btn-gradient-warning {
+    background: linear-gradient(135deg, hsl(var(--warning-color)), hsl(45 100% 35%));
+    color: hsl(var(--text-color)); /* Texto escuro para contraste */
+  }
+  .btn-gradient-info {
+    background: linear-gradient(135deg, hsl(var(--info-color)), hsl(186 100% 30%)); /* Usando turquesa como info */
+    color: hsl(var(--accent-white));
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+  .text-pretty {
+    text-wrap: pretty;
+  }
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+  transition-property: color, background-color, border-color, transform, box-shadow;
+  transition-duration: 300ms; /* Ajustado para 0.3s */
+  transition-timing-function: ease; /* Ajustado para ease */
+}
+
+/* Mobile specific optimizations */
+@media (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  
+  .metric-value {
+    font-size: 1.5rem;
+  }
+  
+  .metric-title {
+    font-size: 0.75rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) {
+  .glow-card:hover {
+    transform: none !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important; /* Resetar sombra para o padrão */
+  }
+}
