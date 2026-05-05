@@ -1,7 +1,7 @@
 # ─────────────────────────────────────────────
 # Stage 1: install all dependencies
 # ─────────────────────────────────────────────
-FROM node:20-alpine AS deps
+FROM node:25-alpine AS deps
 WORKDIR /app
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -12,7 +12,7 @@ RUN pnpm install --no-frozen-lockfile
 # ─────────────────────────────────────────────
 # Stage 2: build frontend + bundle server
 # ─────────────────────────────────────────────
-FROM node:20-alpine AS builder
+FROM node:25-alpine AS builder
 WORKDIR /app
 
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -37,7 +37,7 @@ RUN node_modules/.bin/esbuild server.ts \
 # ─────────────────────────────────────────────
 # Stage 3: lean production image
 # ─────────────────────────────────────────────
-FROM node:20-alpine AS runner
+FROM node:25-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
